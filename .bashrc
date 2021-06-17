@@ -78,10 +78,12 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=always'
     alias dir='dir --color=always'
     alias vdir='vdir --color=always'
+    alias lsn='ls --color=none'
 
     alias grep='grep --color=always'
     alias fgrep='fgrep --color=always'
     alias egrep='egrep --color=always'
+    alias grepn='grep --color=none'
 fi
 
 # colored GCC warnings and errors
@@ -205,3 +207,9 @@ export PATH=$PATH:/mnt/c/Windows/system32:/mnt/c/Windows
 function ipv6full {
 	sed 's/::/:x:/' | tr ':' ' ' | awk '{for(i=1;i<=NF;i++){print 8-NF,$i}}' | awk '/x/{for(i=0;i<=$1;i++){print 0}}!/x/{print $2}' | sed 's/^/000/' | sed 's/^0*\(....\)/\1/' | xargs | tr ' ' ':'
 }
+
+# convenient for scripting
+## log setting
+#exec 2> "/var/log/mdpreview/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+
+
