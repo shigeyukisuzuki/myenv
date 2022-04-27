@@ -50,6 +50,8 @@ autocmd FocusGained * set transparency=220
 autocmd FocusLost   * set transparency=220
 
 "---------------------------------------------------------------------------
+" 現在行数の表示
+set number
 " 相対行数の表示
 set relativenumber
 " 行番号の色
