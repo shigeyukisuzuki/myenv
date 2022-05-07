@@ -197,14 +197,16 @@ nunmap <C-f>
 
 "  bashキーバインドの再現
 inoremap <C-h> <BS>
-inoremap <C-k> d$
-inoremap <C-u> d0
+inoremap <C-k> <C-o>d$
+inoremap <C-u> <C-o>d0
 inoremap <C-s> <ESC>/
 inoremap <C-r> <ESC>?
 inoremap <C-d> <DEL>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
-inoremap <C-y> *
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+inoremap <C-y> <C-o>p
 inoremap <C-i> <Tab>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
@@ -214,7 +216,7 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
-cnoremap <C-y> *
+cnoremap <C-y> <C-o>p
 
 "  tabのshortcut
 nnoremap <C-Tab> gt
