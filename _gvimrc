@@ -198,7 +198,7 @@ nunmap <C-f>
 "  bashキーバインドの再現
 inoremap <C-h> <BS>
 inoremap <C-k> <C-o>d$
-inoremap <C-u> <C-o>d0
+"inoremap <C-u> <C-o>d0
 inoremap <C-s> <ESC>/
 inoremap <C-r> <ESC>?
 inoremap <C-d> <DEL>
