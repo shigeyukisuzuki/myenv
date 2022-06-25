@@ -174,14 +174,26 @@ bind '"\C-xw":"\"$SELECTED_FILE\""'
 # Following an assignment to bind-x to use prompting cause hang up. Don't use.
 #bind -x '"\C-xS":"select-file"'
 
-bind '"\C-x$(":")$("'
-bind '"\C-x${":"}${"'
-bind '"\C-x}":"}{"'
-bind '"\C-x]":" ][ "'
-bind '"\C-x)":")("'
-bind '"\C-x\"":"\"\""'
-#bind '"\C-x\'":"\'\'"'
+# instant path edit
+bind '"\C-x/":"\C-x\C-r\C-r/"'
+bind '"\C-x&":"\C-a\C-s&\C-k"'
+#bind '"\C-x&":"\C-x\C-r\C-r&"'
+#bind '"\C-x\C-v": vi-editing-mode'
+#bind '"\C-x\C-m": emacs-editing-mode'
 
+# brackeing
+bind '"\C-x\x27":"\x27\eb\x27\ef"'	# \x27='(single quote)
+bind '"\C-x$\x27":"\x27\eb$\x27\ef"'	# \x27='(single quote)
+bind '"\C-x\"":"\"\eb\"\ef"'
+bind '"\C-x$\"":"\"\eb$\"\ef"'
+bind '"\C-x}":"}\eb{\ef"'
+bind '"\C-x$}":"}\eb${\ef"'
+bind '"\C-x)":")\eb(\ef"'
+bind '"\C-x$)":")\eb$(\ef"'
+bind '"\C-x]":" ]\eb[ \ef"'  # spaces need for squaring bracket a condition expression.
+bind '"\C-x]]":" ]]\eb[[ \ef"'  # spaces need for squaring bracket a condition expression.
+
+# call pager/editor
 bind '"\C-xp":" | less -R"'
 bind '"\C-xv":" +%p +q!"'
 
@@ -193,7 +205,7 @@ bind -x '"\ed":ls /dev/'
 bind -x '"\ek":cd ..;echo "====> $PWD"'
 #bind -x '"\e[A":cd ..;echo "====> $PWD"'
 bind -x '"\e~":cd ~;echo "====> $PWD"'
-bind -x '"\e/":cd /;echo "====> $PWD"'
+#bind -x '"\e/":cd /;echo "====> $PWD"'
 bind -x '"\ep":ps alx | less'
 bind -x '"\et":date "+%Y%m%d"'
 
