@@ -3,7 +3,8 @@
 " vimの機能を有効化する
 set nocompatible
 " ファイル形式別pluginを有効化する
-filetype plugin on 
+" pythonファイルを編集時にタブが自動でexpandされるため、使用しない
+"filetype plugin on 
 
 "---------------------------------------------------------------------------
 "表示
