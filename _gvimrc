@@ -142,48 +142,7 @@ set cmdheight=2
 " 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
 "colorscheme evening " (GUI使用時)
 
-"---------------------------------------------------------------------------
-"キー設定関連
-"  IME設定
-set iminsert=0
-set imsearch=0
-"set imcmdline
-
-"  設定更新
-nnoremap     <F1> :help 
-nnoremap   <S-F1> :tabnew<CR>:help 
-nnoremap   <C-F1> :helpgrep 
-nnoremap <C-S-F1> :tabnew<CR>:helpgrep 
-nnoremap     <F5> :source $VIM/gvimrc<CR>
-nnoremap <C-S-F5> :tabnew D:¥¥myData¥¥Documents¥¥tools¥¥vim74-kaoriya-win64¥¥gvimrc<CR>
-
-"  マクロのshortcut
-nnoremap <C-@> @@
-
-"  xやsではregisterにyankしない
-nnoremap x "_x
-nnoremap s "_s
-
-"  カーソル下の単語をハイライトする
-nnoremap <silent>  <C-h> "+yiw:let @/ = '¥<' . @+ . '¥>'<CR>:set hlsearch<CR>
-nnoremap <silent> g<C-h> "+yiW:let @/ =        @+       <CR>:set hlsearch<CR>
-
-"  空行の挿入
-nnoremap   <S-CR> mto<ESC>`t
-nnoremap <C-S-CR> mtO<ESC>`t
-
-"  行を移動
-nnoremap <S-C-k> ddkP
-nnoremap <S-C-j> ddp
-
-"  複数行を移動
-vnoremap <S-C-k> "txk"tP`[V`]
-vnoremap <S-C-j> "tx"tp`[V`]
-
-"  ハイライト解除
-"nnoremap <ESC><ESC> <ESC>:noh<CR>:redir END<CR>
-nnoremap <silent> <ESC><ESC> :nohlsearch<CR><C-l>
-
+"--------------------------------------------------------
 "  zxcv配列の代替キー インクリメント、デクリメントのショートカット
 nnoremap <A-a> <C-a>
 nnoremap <A-s> <C-s>
@@ -294,6 +253,7 @@ function! RedirMode()
 	endif
 endfunction
 
+"---------------------------------------------------------------------------
 "netrwの設定
 "  ファイルツリーの表示形式、1にするとls -laのような表示になります
 let g:netrw_liststyle=1
