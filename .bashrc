@@ -224,4 +224,7 @@ function ipv6full {
 ## log setting
 #exec 2> "/var/log/mdpreview/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 
-
+# user define alias
+if which xmllint > /dev/null; then
+	alias xpath="xmllint --html --xpath 2>/dev/null"
+fi
