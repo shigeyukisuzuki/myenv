@@ -132,6 +132,7 @@ export EDITOR=vi
 ### when it init, run tmux.
 SESSION_NAME=main
 
+#:() {
 if [[ -z "$TMUX" && -z "$STY" ]] && type tmux >/dev/null 2>&1; then
   option=""
   if tmux has-session -t ${SESSION_NAME}; then
@@ -141,6 +142,7 @@ if [[ -z "$TMUX" && -z "$STY" ]] && type tmux >/dev/null 2>&1; then
   fi  
   tmux $option && exit
 fi
+#}
 
 ### handmade command
 export SELECTED_MAX=0
@@ -231,3 +233,19 @@ function ipv6full {
 if which xmllint > /dev/null; then
 	alias xpath="xmllint --html --xpath 2>/dev/null"
 fi
+
+# record shell manipulating
+function shellRecord () {
+	temp=$(mktemp -p ~)
+	tail -f $temp | awk '{ print strftime("%Y/%m/%d %H:%M:%S") " " $0 } {fflush() }' >> ~/script/shellRecord.$(date +"%Y%m%d_%H%M%S").log &
+	recordPid=$!
+	echo $recordPid
+	script $temp
+	kill $recordPid
+	rm $temp
+}
+
+# display terminal colors
+function termColors () {
+	:
+}
