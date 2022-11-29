@@ -236,16 +236,23 @@ fi
 
 # record shell manipulating
 function shellRecord () {
+	recordPath=~/script/shellRecord.$(date +"%Y%m%d_%H%M%S").log 
 	temp=$(mktemp -p ~)
-	tail -f $temp | awk '{ print strftime("%Y/%m/%d %H:%M:%S") " " $0 } {fflush() }' >> ~/script/shellRecord.$(date +"%Y%m%d_%H%M%S").log &
+	tail -F $temp | awk '{ print strftime("%Y/%m/%d %H:%M:%S") " " $0 } {fflush() }' >> ${recordPath}&
 	recordPid=$!
 	echo $recordPid
-	script $temp
+	script -fq $temp
 	kill $recordPid
 	rm $temp
 }
 
 # display terminal colors
-function termColors () {
-	:
+function listColors () {
+	echo "n  FG    BG"
+	for i in $(seq 0 7); do 
+		echo -e "${i} \e[3${i}m 3${i}  \e[0;4${i}m  4${i}  \e[0m"
+	done
+	for i in $(seq 0 7); do
+		echo -e "${i} \e[9${i}m 9${i}  \e[0;10${i}m 10${i}  \e[0m"
+	done
 }
