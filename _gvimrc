@@ -250,4 +250,6 @@ function! knuth_random.next() dict
 endfunction
 
 " 開始モードを挿入モードで開始
-startinsert
+if expand("%") == ''
+	startinsert
+endif
