@@ -214,8 +214,23 @@ bind -x '"\e~":cd ~;echo "====> $PWD"'
 bind -x '"\ep":ps alx | less'
 bind -x '"\et":date "+%Y%m%d"'
 
-#PS1='${debian_chroot:+($debian_chroot)}\e[30;47m\t\e[39;45m\u\e[43m\h\e[44m\w\e[0m '
-PS1='${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;45m\]@\h\[\e[37;44m\]:\w\[\e[0m\] '
+#PS1='${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;45m\]@\h\[\e[37;44m\]:\w\[\e[0m\] '
+case $(hostname | grep -o '^.') in
+	a|A|n|N) bgHost=40  ;;
+	b|B|o|O) bgHost=41  ;;
+	c|C|p|P) bgHost=42  ;;
+	d|D|q|Q) bgHost=43  ;;
+	e|E|r|R) bgHost=44  ;;
+	f|F|s|S) bgHost=45  ;;
+	g|G|t|T) bgHost=46  ;;
+	h|H|u|U) bgHost=100 ;;
+	i|I|v|V) bgHost=101 ;;
+	j|J|w|W) bgHost=102 ;;
+	k|K|x|X) bgHost=104 ;;
+	l|L|y|Y) bgHost=105 ;;
+	m|M|z|Z) bgHost=106 ;;
+esac
+PS1="${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;${bgHost}m\]@\h\[\e[37;44m\]:\w\[\e[0m\] "
 PS2=$(echo $PS1 | sed -e "s/\${*}//g" | sed -e "s/\\e.+m//g")\>
 
 # For using Explorer.exe in debian
