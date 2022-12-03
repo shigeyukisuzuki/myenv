@@ -253,3 +253,9 @@ endfunction
 if expand("%") == ''
 	startinsert
 endif
+
+" GUIウインドウが立ち上がるdefaultショートカットを変更
+noremap <C-F> <PageDown>
+noremap! <C-F> <Right>
+noremap <C-H> <BS>
+noremap! <C-H> <BS>
