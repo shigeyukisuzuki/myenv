@@ -215,20 +215,21 @@ bind -x '"\ep":ps alx | less'
 bind -x '"\et":date "+%Y%m%d"'
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;45m\]@\h\[\e[37;44m\]:\w\[\e[0m\] '
-case $(hostname | grep -o '^.') in
-	a|A|n|N) bgHost=40  ;;
-	b|B|o|O) bgHost=41  ;;
-	c|C|p|P) bgHost=42  ;;
-	d|D|q|Q) bgHost=43  ;;
-	e|E|r|R) bgHost=44  ;;
-	f|F|s|S) bgHost=45  ;;
-	g|G|t|T) bgHost=46  ;;
-	h|H|u|U) bgHost=100 ;;
-	i|I|v|V) bgHost=101 ;;
-	j|J|w|W) bgHost=102 ;;
-	k|K|x|X) bgHost=104 ;;
-	l|L|y|Y) bgHost=105 ;;
-	m|M|z|Z) bgHost=106 ;;
+case $HOSTNAME in
+	[aAnN]* ) bgHost=40  ;;
+	[bBoO]* ) bgHost=41  ;;
+	[cCpP]* ) bgHost=42  ;;
+	[dDqQ]* ) bgHost=43  ;;
+	[eErR]* ) bgHost=44  ;;
+	[fFsS]* ) bgHost=45  ;;
+	[gGtT]* ) bgHost=46  ;;
+	[hHuU]* ) bgHost=100 ;;
+	[iIvV]* ) bgHost=101 ;;
+	[jJwW]* ) bgHost=102 ;;
+	[kKxX]* ) bgHost=104 ;;
+	[lLyY]* ) bgHost=105 ;;
+	[mMzZ]* ) bgHost=106 ;;
+	*		) bgHost=    ;;
 esac
 PS1="${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;${bgHost}m\]@\h\[\e[37;44m\]:\w\[\e[0m\] "
 PS2=$(echo $PS1 | sed -e "s/\${*}//g" | sed -e "s/\\e.+m//g")\>
