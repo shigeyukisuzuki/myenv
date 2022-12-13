@@ -249,10 +249,11 @@ function! knuth_random.next() dict
 	return l:r
 endfunction
 
-" 開始モードを挿入モードで開始
+" 開いたファイルが、無名か空の場合、挿入モードで開始
 if expand("%") == ''
 	startinsert
 endif
+autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endif
 
 " GUIウインドウが立ち上がるdefaultショートカットを変更
 noremap <C-F> <PageDown>
