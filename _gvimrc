@@ -260,3 +260,12 @@ noremap <C-F> <PageDown>
 noremap! <C-F> <Right>
 noremap <C-H> <BS>
 noremap! <C-H> <BS>
+
+" youtube“®‰æURLƒŠƒXƒg‰»
+function! ListiseURLsFromYoutube()
+	v/https/d
+	v/ytimg/d
+	%s#^.*https://i.ytimg.com/vi/##
+	%s#/hqdefault.*$##
+	%s#^#https://www.youtube.com/watch?v=#
+endfunction
