@@ -88,8 +88,8 @@ nnoremap <A-v> <C-v>
 inoremap <C-h> <BS>
 inoremap <C-k> <C-o>d$
 "inoremap <C-u> <C-o>d0
-inoremap <C-s> <ESC>/
-inoremap <C-r> <ESC>?
+"inoremap <C-s> <ESC>/
+"inoremap <C-r> <ESC>?
 inoremap <C-d> <DEL>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
