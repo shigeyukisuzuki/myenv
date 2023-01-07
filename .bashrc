@@ -251,8 +251,8 @@ if which xmllint > /dev/null; then
 fi
 
 # record shell manipulating
-function shellRecord () {
-	recordPath=~/script/shellRecord.$(date +"%Y%m%d_%H%M%S").log 
+function record () {
+	recordPath=~/script/record.$(date +"%Y%m%d_%H%M%S").log 
 	temp=$(mktemp -p ~)
 	tail -F $temp | awk '{ print strftime("%Y/%m/%d %H:%M:%S") " " $0 } {fflush() }' >> ${recordPath}&
 	recordPid=$!
