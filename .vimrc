@@ -257,3 +257,8 @@ function! ListiseURLsFromYoutube()
     %s#^#https://www.youtube.com/watch?v=#
 endfunction
 
+" Windowsパスでコピーしたfile path一覧の両側にある"記号を削除
+function! TruncateQuoationMarks()
+	s/\v^"|"$//g
+endfunction
+
