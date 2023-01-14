@@ -89,7 +89,8 @@ inoremap <C-h> <BS>
 inoremap <C-k> <C-o>d$
 "inoremap <C-u> <C-o>d0
 "inoremap <C-s> <ESC>/
-"inoremap <C-r> <ESC>?
+" the following conflict with C-r register paste command.
+"inoremap <C-r> <ESC>? 
 inoremap <C-d> <DEL>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
@@ -240,4 +241,10 @@ nnoremap <A-l>d :ldo
 nnoremap <A-l><C-d> :ldo
 nnoremap <A-l>f :ldo
 nnoremap <A-l><C-f> :ldo
+
+" 開いたファイルが、無名か空の場合、挿入モードで開始
+if expand("%") == ''
+	startinsert
+endif
+autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endif
 
