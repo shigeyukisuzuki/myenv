@@ -248,3 +248,12 @@ if expand("%") == ''
 endif
 autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endif
 
+" youtube動画URLリスト化
+function! ListiseURLsFromYoutube()
+    v/https/d
+    v/ytimg/d
+    %s#^.*https://i.ytimg.com/vi/##
+    %s#/hqdefault.*$##
+    %s#^#https://www.youtube.com/watch?v=#
+endfunction
+
