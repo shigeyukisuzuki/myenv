@@ -275,10 +275,15 @@ function listColors () {
 
 # extract log data between datetimes
 function interDatetime (){
+	# 時刻を含むログデータファイル $1
 	inputFile=$1
+	# ファイルの各行の時刻テキストを抽出するsedコマンド $2
+	# 処理結果は、dateコマンドに入力可能であるもの。
 	sedCommand=$2
+	# 開始日時 $3
 	startTime=$(date -d "$3" +%s) 
 	[ $? -ne 0 ] && return 3
+	# 終了日時 $4
 	endTime=$(date -d "$4" +%s) 
 	[ $? -ne 0 ] && return 4
 	cat $inputFile |
