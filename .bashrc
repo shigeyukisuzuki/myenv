@@ -272,3 +272,21 @@ function listColors () {
 		echo -e "${i} \e[9${i}m 9${i}  \e[0;10${i}m 10${i}  \e[0m"
 	done
 }
+
+# extract log data between datetimes
+function interDatetime (){
+	inputFile=$1
+	sedCommand=$2
+	startTime=$(date -d "$3" +%s) 
+	[ $? -ne 0 ] && return 3
+	endTime=$(date -d "$4" +%s) 
+	[ $? -ne 0 ] && return 4
+	cat $inputFile |
+	sed -E "$sedCommand" | date -f- +%s | paste - $inputFile  |
+	while read timeId others; do 
+		if [ $startTime -le $timeId -a $timeId -le $endTime ]; then
+			echo $others
+		fi
+	done
+}
+
