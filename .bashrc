@@ -295,3 +295,10 @@ function interDatetime (){
 	done
 }
 
+# CLIでvimコマンドを利用するための関数
+function vipe (){
+  COMMAND=$(echo "$*")
+  # コロン':'でESC入力を代替する場合はコメントを外す。^[はCtrl+vしてESC押して入力
+  # COMMAND=$(echo "$*" |sed -e 's/:/^[/g')
+  vim - -es +":norm gg" +":norm $COMMAND" +:%p +:q! |sed '1d'
+}
