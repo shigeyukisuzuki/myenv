@@ -237,8 +237,25 @@ PS2=$(echo $PS1 | sed -e "s/\${*}//g" | sed -e "s/\\e.+m//g")\>
 # For using Explorer.exe in debian
 export PATH=$PATH:/mnt/c/Windows/system32:/mnt/c/Windows
 
+# script for network
+## get ip version 6 full address
 function ipv6full {
 	sed 's/::/:x:/' | tr ':' ' ' | awk '{for(i=1;i<=NF;i++){print 8-NF,$i}}' | awk '/x/{for(i=0;i<=$1;i++){print 0}}!/x/{print $2}' | sed 's/^/000/' | sed 's/^0*\(....\)/\1/' | xargs | tr ' ' ':'
+}
+
+## get global ip address beyond NAT
+mygip () {
+	resolvers=(resolver1.opendns.com resolver2.opendns.com resolver3.opendns.com resolver4.opendns.com)
+	result=""
+	for resolver in "${resolvers}"; do
+		result=$(dig +short myip.opendns.com @"${resolver}")
+		if [ -n "$result" ]; then
+			echo "$result"
+			return
+		fi
+	done
+	echo "cannot find resolver."
+	return 1
 }
 
 # convenient for scripting
