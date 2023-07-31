@@ -263,13 +263,13 @@ function! TruncateQuoationMarks()
 endfunction
 
 " vimの行番号・相対行番号を表示
-function! SetNumber()
+function! Number()
 	set number
 	set relativenumber
 endfunction
 
 " vimの行番号・相対行番号を非表示
-function! SetNoNumber()
+function! NoNumber()
 	set nonumber
 	set norelativenumber
 endfunction
