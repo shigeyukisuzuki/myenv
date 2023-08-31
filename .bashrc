@@ -317,3 +317,14 @@ function vipe (){
   # COMMAND=$(echo "$*" |sed -e 's/:/^[/g')
   vim - -es +":norm gg" +":norm $COMMAND" +:%p +:q! |sed '1d'
 }
+
+# 短縮URLを元のURLに展開する関数
+function urlunzip (){
+	if command -v curl > /dev/null; then
+		curl -s -i $1 -L | awk -F': ' '/location:/{print $2}' | tail -n 1
+	elif command -v wget > /dev/null; then
+		wget -q -S $1 -O /dev/null |& awk -F ': ' '/Location/{print $2}' | tail -n 1
+	else
+		echo 'curl and wget are not install in this system.' 2> /dev/stderr
+	fi
+}
