@@ -325,6 +325,6 @@ function urlunzip (){
 	elif command -v wget > /dev/null; then
 		wget -q -S $1 -O /dev/null |& awk -F ': ' '/Location/{print $2}' | tail -n 1
 	else
-		echo 'curl and wget are not install in this system.' 2> /dev/stderr
+		echo 'curl and wget are not installed in this system.' 2> /dev/stderr
 	fi
 }
