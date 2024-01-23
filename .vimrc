@@ -22,7 +22,17 @@ set cmdheight=2
 set hidden
 " シンタックスハイライト
 syntax on
+" vimの行番号・相対行番号を表示
+function! Number()
+	set number
+	set relativenumber
+endfunction
 
+" vimの行番号・相対行番号を非表示
+function! NoNumber()
+	set nonumber
+	set norelativenumber
+endfunction
 "---------------------------------------------------------------------------
 "検索
 " 検索ワードの最初の文字を入力した時点で検索を開始する
@@ -242,11 +252,19 @@ nnoremap <A-l><C-d> :ldo
 nnoremap <A-l>f :ldo
 nnoremap <A-l><C-f> :ldo
 
+"---------------------------------------------------------------------------
+"動作設定
 " 開いたファイルが、無名か空の場合、挿入モードで開始
 if expand("%") == ''
 	startinsert
 endif
 autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endif
+
+" 保存する際、末尾にEOLを自動で加えない
+"set noeol
+"set nofixeol
+autocmd BufRead * setlocal binary
+autocmd BufRead * setlocal noeol
 
 " youtube動画URLリスト化
 function! ListiseURLsFromYoutube()
@@ -260,16 +278,4 @@ endfunction
 " Windowsパスでコピーしたfile path一覧の両側にある"記号を削除
 function! TruncateQuoationMarks()
 	s/\v^"|"$//g
-endfunction
-
-" vimの行番号・相対行番号を表示
-function! Number()
-	set number
-	set relativenumber
-endfunction
-
-" vimの行番号・相対行番号を非表示
-function! NoNumber()
-	set nonumber
-	set norelativenumber
 endfunction
