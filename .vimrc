@@ -27,12 +27,13 @@ function! Number()
 	set number
 	set relativenumber
 endfunction
-
 " vimの行番号・相対行番号を非表示
 function! NoNumber()
 	set nonumber
 	set norelativenumber
 endfunction
+" タブの表示
+set list listchars=tab:\|\  
 "---------------------------------------------------------------------------
 "検索
 " 検索ワードの最初の文字を入力した時点で検索を開始する
