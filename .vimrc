@@ -276,6 +276,14 @@ function! ListiseURLsFromYoutube()
     %s#^#https://www.youtube.com/watch?v=#
 endfunction
 
+" tver動画URLリスト化
+function! ListiseURLsFromTVer()
+    v/\/episodes\//d
+    %s#^.*<a href="\/episodes\/##
+    %s#">.*$##
+    %s#^#https://tver.jp/episodes/#
+endfunction
+
 " Windowsパスでコピーしたfile path一覧の両側にある"記号を削除
 function! TruncateQuoationMarks()
 	s/\v^"|"$//g
