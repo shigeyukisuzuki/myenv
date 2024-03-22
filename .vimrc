@@ -262,10 +262,11 @@ endif
 autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endif
 
 " 保存する際、末尾にEOLを自動で加えない
-"set noeol
-"set nofixeol
-autocmd BufRead * setlocal binary
-autocmd BufRead * setlocal noeol
+" cronを設定する際に、末尾にEOLが必要のため、解除する
+""set noeol
+""set nofixeol
+"autocmd BufRead * setlocal binary
+"autocmd BufRead * setlocal noeol
 
 " youtube動画URLリスト化
 function! ListiseURLsFromYoutube()
