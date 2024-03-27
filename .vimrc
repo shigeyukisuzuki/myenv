@@ -112,6 +112,9 @@ inoremap <C-y> <C-o>p
 inoremap <C-i> <Tab>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+
+" CUIの性質として、Shift + Enterが検出できないようである。
+"inoremap <S-Enter> <Enter><Up>
 cnoremap <C-h> <BS>
 cnoremap <C-d> <DEL>
 cnoremap <C-a> <Home>
