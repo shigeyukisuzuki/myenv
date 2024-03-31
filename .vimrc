@@ -112,9 +112,9 @@ inoremap <C-y> <C-o>p
 inoremap <C-i> <Tab>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
-
 " CUIの性質として、Shift + Enterが検出できないようである。
 "inoremap <S-Enter> <Enter><Up>
+
 cnoremap <C-h> <BS>
 cnoremap <C-d> <DEL>
 cnoremap <C-a> <Home>
@@ -268,10 +268,10 @@ autocmd BufReadPost * if line('$') == 1 && getline(1) == '' | startinsert | endi
 "set noeol
 "set nofixeol
 " 仕様上、crontabを保存する際に、末尾にEOLが必要のため、設定を除外する
-if expand('%:t') != 'crontab'
-	autocmd BufRead * setlocal binary
-	autocmd BufRead * setlocal noeol
-endif
+"if expand('%:t') != 'crontab'
+"	autocmd BufRead * setlocal binary
+"	autocmd BufRead * setlocal noeol
+"endif
 
 " youtube動画URLリスト化
 function! ListiseURLsFromYoutube()
