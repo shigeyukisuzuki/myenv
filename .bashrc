@@ -328,3 +328,38 @@ function urlunzip (){
 		echo 'curl and wget are not installed in this system.' 2> /dev/stderr
 	fi
 }
+
+# スクリプト実行時に行数表示
+function verboseScript (){
+	# initialize
+	local options arg
+	options=''
+	arg=''
+
+	# parse options and arg
+	while [ $# -gt 0 ]; do
+		if echo "$1" | grep -qP '^-'; then
+			# collect options
+			options="$options $1"
+		else
+			# set argment
+			[ -n "$arg" ] && echo '[01;31mThis function use only one argment.[0m' >&2 2>/dev/null && return 1
+			arg="$1"
+		fi
+		shift
+	done
+
+	# validation that file exist and isn't empty
+	[ -e "$arg" ] || { echo '[01;31mSpecified file does not exist.[0m' >&2 2>/dev/null && return 2; }
+	[ $(wc -l "$arg" | cut -d ' ' -f 1) -gt 0 ] || { echo '[01;31mSpecified file is empty.[0m' >&2 2>/dev/null && return 3; }
+
+	# check #! (sheban)
+	if head -n 1 "$arg" | grep -qE '^#!'; then
+		bodyStartLine=2
+	else
+		bodyStartLine=1
+	fi
+
+	# execute script in debug mode
+	cat "$arg" | sed -E "${bodyStartLine}itrap ""'"'echo "$((LINENO-1)):\$ $BASH_COMMAND"'"'"' DEBUG' | bash $options
+}
