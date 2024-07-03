@@ -290,6 +290,15 @@ function! ListiseURLsFromTVer()
     %s#^#https://tver.jp/episodes/#
 endfunction
 
+" Abema動画URLリスト化
+function! ListiseURLsFromAbema()
+    %s#<a href#\r&#g
+    v#com-content-list-ContentListEpisodeItem__link#d
+    %s#^<a href="##
+    %s#".*$##
+    %s#^#https://abema.tv#
+endfunction
+
 " Windowsパスでコピーしたfile path一覧の両側にある"記号を削除
 function! TruncateQuoationMarks()
 	s/\v^"|"$//g
