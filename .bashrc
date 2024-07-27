@@ -363,3 +363,41 @@ function verboseScript (){
 	# execute script in debug mode
 	cat "$arg" | sed -E "${bodyStartLine}itrap ""'"'echo "$((LINENO-1)):\$ $BASH_COMMAND"'"'"' DEBUG' | bash $options
 }
+
+# 漢数字変換
+function kansuuji (){
+	synopsis='SYNOPSIS:\n
+	kansuuji NaturalNumber\n
+	echo NaturalNumber | kansuuji'
+	if [ $# -gt 1 ]; then
+		echo -e $synopsis
+		return 1
+	elif [ $# -eq 1 ]; then
+		arg=$1
+	elif [ $# -eq 0 ]; then
+		if [ ! -p /dev/stdin ]; then
+			echo -e $synopsis
+			return 2
+		fi
+		arg=$(cat /dev/stdin)
+	fi
+	# validate argment
+	if ! echo ${arg} | grep -qP '^0$|^[1-9]\d*$' ;then
+		echo 'argment must be a NaturalNumber'
+		return 3
+	fi
+	if [ $arg -eq 0 ];then
+		echo '零'
+		return 0
+	fi
+	# transform number to kansuuji
+	echo "$arg" |
+	sed 'y/0123456789/〇一二三四五六七八九/' |
+	grep --color=none -o . |
+	tac |
+	paste - <(echo {十,百,千,万,十,百,千,億,十,百,千} | fmt -1 | cat <(echo) -) |
+	grep -vE ^$'\t' |
+	tac |
+	sed -zE 's/(\t|\n)//g'|
+	perl -lpe 's/一(?!($|万|億))//g;s/〇(千|百|十)//g;s/〇//g;s/(?<=億)万//g'
+}
