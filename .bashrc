@@ -174,21 +174,19 @@ function fcd() {
 		echo 'command fzf not found'
 		return
 	fi
+	local next
 	next=$(pwd)
 	while true; do
 		next=$(ls -aF |  fzf --reverse --prompt "$next > " | sed -E 's#[*=>@|]$##')
-		if [ -z "$next" ] || [ "$next" == './' ] ; then
-			   break
+		if [ -z "$next" ] || [ "$next" == './' ] || [ ! -d "$next" ]; then
+			break
 		fi
-		if [ -d "$next" ]; then
-			   cd "$next"
-			   next=$(pwd)
-			   continue
-		fi
-		echo $(realpath "$next")
-		break
+		cd "$next"
+		next=$(pwd)
 	done
-}
+	FCD_SELECT=$(realpath "$next")
+	echo $FCD_SELECT
+} 
 
 bind '"\C-xs":"select-file"'
 bind '"\C-xf":"select-file -f"'
