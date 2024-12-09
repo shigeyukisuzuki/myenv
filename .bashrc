@@ -177,8 +177,10 @@ function fcd() {
 	local next
 	next=$(pwd)
 	while true; do
-		next=$(ls -aF |  fzf --reverse --prompt "$next > " | sed -E 's#[*=>@|]$##')
-		if [ -z "$next" ] || [ "$next" == './' ] || [ ! -d "$next" ]; then
+		next=$(ls -aF |  fzf --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% | sed -E 's#[*=>@|]$##')
+		if [ -z "$next" ]; then
+			return
+		elif [ "$next" == './' ] || [ ! -d "$next" ]; then
 			break
 		fi
 		cd "$next"
@@ -186,7 +188,7 @@ function fcd() {
 	done
 	FCD_SELECT=$(realpath "$next")
 	echo $FCD_SELECT
-} 
+}
 
 bind '"\C-xs":"select-file"'
 bind '"\C-xf":"select-file -f"'
