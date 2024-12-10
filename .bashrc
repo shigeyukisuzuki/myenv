@@ -168,7 +168,7 @@ function list-select () {
 	done
 }
 
-# simple file finder
+# fuzzy file finder
 function fcd() {
 	if ! which fzf > /dev/null; then
 		echo 'command fzf not found'
@@ -188,6 +188,13 @@ function fcd() {
 	done
 	FCD_SELECT=$(realpath "$next")
 	echo $FCD_SELECT
+}
+
+# fuzzy history execute
+function fhistory() {
+	command=$(history | fzf --tac | tr -s ' ' | cut -d ' ' -f 5-)
+	echo "> $command"
+	$command
 }
 
 bind '"\C-xs":"select-file"'
