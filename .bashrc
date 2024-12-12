@@ -197,6 +197,17 @@ function fhistory() {
 	$command
 }
 
+# fuzzy process killer
+function fpkill() {
+	# extract column number of PID
+	columnPid=$(ps $1 | head -n 1 | tr -s ' ' '\n' |
+				for i in $(seq 20); do
+					read header
+					[ "PID" == "$header" ] && echo $i && break
+				done)
+	ps $1 | fzf -m --reverse | tr -s ' ' | cut -d ' ' -f $columnPid | xargs kill
+}
+ 
 bind '"\C-xs":"select-file"'
 bind '"\C-xf":"select-file -f"'
 bind '"\C-xl":"list-select"'
