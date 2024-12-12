@@ -169,7 +169,7 @@ function list-select () {
 }
 
 # fuzzy file finder
-function fcd() {
+function fzcd() {
 	if ! which fzf > /dev/null; then
 		echo 'command fzf not found'
 		return
@@ -191,14 +191,14 @@ function fcd() {
 }
 
 # fuzzy history execute
-function fhistory() {
+function fzhistory() {
 	command=$(history | fzf --tac | tr -s ' ' | cut -d ' ' -f 5-)
 	echo "> $command"
 	$command
 }
 
 # fuzzy process killer
-function fpkill() {
+function fzpkill() {
 	# extract column number of PID
 	columnPid=$(ps $1 | head -n 1 | tr -s ' ' '\n' |
 				for i in $(seq 20); do
