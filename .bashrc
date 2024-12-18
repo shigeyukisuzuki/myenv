@@ -186,8 +186,8 @@ function fzcd() {
 		cd "$next"
 		next=$(pwd)
 	done
-	FCD_SELECT=$(realpath "$next")
-	echo $FCD_SELECT
+	FZCD_SELECT=$(realpath "$next")
+	echo $FZCD_SELECT
 }
 
 # fuzzy history execute
