@@ -44,7 +44,7 @@ set ignorecase
 set smartcase
 
 "---------------------------------------------------------------------------
-"タブ
+"タブ・インデント
 " タブを表示するときの幅
 set tabstop=4
 " タブを挿入するときの幅
@@ -53,6 +53,11 @@ set shiftwidth=4
 set noexpandtab
 " 
 set softtabstop=0
+" ファイル種類ごとの個別設定
+augroup fileTypeIndent
+  autocmd!
+  autocmd BufNewFile,BufRead *.py setlocal autoindent expandtab
+augroup END
 
 "---------------------------------------------------------------------------
 "SHELL
