@@ -34,6 +34,7 @@ function! NoNumber()
 endfunction
 " タブの表示
 set list listchars=tab:\|\  
+
 "---------------------------------------------------------------------------
 "検索
 " 検索ワードの最初の文字を入力した時点で検索を開始する
@@ -133,6 +134,8 @@ cnoremap <C-y> <C-o>p
 set iminsert=0
 set imsearch=0
 "set imcmdline
+"  normalモードの行頭時のhキーと行末時のlキーの折り返しキーバインド
+set whichwrap=<,>,~,b,s,h,l
 
 "  設定更新
 nnoremap     <F1> :help 
