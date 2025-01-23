@@ -177,7 +177,7 @@ function fzcd() {
 	local next
 	next=$(pwd)
 	while true; do
-		next=$(ls -aF |  fzf --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% | sed -E 's#[*=>@|]$##')
+		next=$(ls -a --file-type --color=always |  fzf --ansi --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% | sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
 			return
 		elif [ "$next" == './' ] || [ ! -d "$next" ]; then
