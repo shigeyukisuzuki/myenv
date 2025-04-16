@@ -3,7 +3,7 @@
 "---------------------------------------------------------------------------
 "エンコード設定
 "fileencodings:ファイルを読み込むときに入力ファイルの取り扱い文字コード形式のリストで左側から評価される
-set fileencodings=utf-16le,utf-8,cp932,guess,ucs-bom,ucs2le,ucs-2,iso-2022-jp-3,euc-jisx0213,euc-jp
+set fileencodings=utf-8,cp932,utf-16le,guess,ucs-bom,ucs2le,ucs-2,iso-2022-jp-3,euc-jisx0213,euc-jp
 "fileencoding:ファイルを出力する際に指定する文字コード形式
 "encoding:読み込んだファイルを画面に表示するときの文字コード形式
 "utf-8とcp932は似ているので、エラー無でエンコーディングされることがある
