@@ -14,9 +14,11 @@ set fileencodings=utf-16le,utf-8,cp932,guess,ucs-bom,ucs2le,ucs-2,iso-2022-jp-3,
 " カラー設定:
 "colorscheme asu1dark
 " 透明度設定:
-autocmd GUIEnter    * set transparency=220
-autocmd FocusGained * set transparency=220
-autocmd FocusLost   * set transparency=220
+if has('win32')
+  autocmd GUIEnter    * set transparency=220
+  autocmd FocusGained * set transparency=220
+  autocmd FocusLost   * set transparency=220
+endif
 
 "---------------------------------------------------------------------------
 " クリップボード設定:
@@ -57,11 +59,6 @@ set undofile
 set undodir=$VIM¥¥vimfiles¥¥undo
 
 "---------------------------------------------------------------------------
-"viminfoファイルの保存先
-"set viminfo='100,<50,s10,h,rA:,rB:,nC:¥¥Program¥ Files¥¥vim74-kaoriya-win32¥¥viminfo
-set viminfo='100,<50,s10,h,rA:,rB:,nD:¥¥
-
-"---------------------------------------------------------------------------
 " フォント設定:
 if has('win32')
   " Windows用
@@ -74,9 +71,12 @@ if has('win32')
   if has('kaoriya')
     set ambiwidth=auto
   endif
+elseif has('linux')
+  " Linux用
+  set guifont=Monospace\ 16
 elseif has('mac')
   set guifont=Osaka−等幅:h14
-elseif has('xfontset')
+elseif has('unix')
   " UNIX用 (xfontsetを使用)
   set guifontset=a14,r14,k14
 endif

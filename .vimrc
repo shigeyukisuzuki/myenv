@@ -71,6 +71,15 @@ augroup fileTypeIndent
 augroup END
 
 "---------------------------------------------------------------------------
+"viminfoファイルの保存先
+if has('linux')
+	set viminfo='100,<50,s10,h,rA:,rB:,n~/.viminfo
+elseif has('win32')
+	"set viminfo='100,<50,s10,h,rA:,rB:,nC:¥¥Program¥ Files¥¥vim74-kaoriya-win32¥¥viminfo
+	set viminfo='100,<50,s10,h,rA:,rB:,nD:¥¥
+endif
+
+"---------------------------------------------------------------------------
 "SHELL
 " Linuxの場合
 if has('linux')
