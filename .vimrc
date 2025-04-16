@@ -80,6 +80,30 @@ elseif has('win32')
 endif
 
 "---------------------------------------------------------------------------
+"swap fileの設定
+" swapfileの更新設定
+" 更新文字数 default=200
+set updatecount=200
+"set updatecount=0
+"　更新頻度ミリ秒 default=4000
+set updatetime=4000
+" swapfileの生成
+set swapfile
+"set noswapfile
+" 保存先 default :set directory=.c:¥tmp,c:¥temp
+" 保存先がデフォルトではファイルの変更を許可しない場合、そのファイルのセキュリ
+" ティ設定を変更し、編集可能にする必要がある。
+" これはswapfileだけでなく、backupファイル、viminfoファイルにも言える。
+" ファイルアドレスに空白が入るときは¥でエスケープする
+"set directory=C:¥¥Program¥ Files¥¥vim74-kaoriya-win32
+"set directory=G:¥¥Desktop
+if has('linux')
+	set directory=~/.vim
+elseif has('win32')
+	set directory=$VIM¥¥vimfiles¥¥swap
+endif
+
+"---------------------------------------------------------------------------
 "SHELL
 " Linuxの場合
 if has('linux')
