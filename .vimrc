@@ -4,7 +4,7 @@
 set nocompatible
 " ファイル形式別pluginを有効化する
 " pythonファイルを編集時にタブが自動でexpandされるため、使用しない
-"filetype plugin on 
+"filetype plugin on
 
 "---------------------------------------------------------------------------
 "表示
@@ -33,7 +33,7 @@ function! NoNumber()
 	set norelativenumber
 endfunction
 " タブの表示
-set list listchars=tab:\|\  
+set list listchars=tab:\|\ ,eol:↲
 " カーソル
 "  カーソルラインの表示
 set cursorline
