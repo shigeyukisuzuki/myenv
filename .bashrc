@@ -457,6 +457,7 @@ function rep () {
 		cat <<EOF
 rep <repeat_times> <command...>
 EOF
+		return 1
 	fi
 	repeatTimes=$1
 	shift 1
@@ -465,7 +466,7 @@ EOF
 	while [ $i -lt $repeatTimes ]; do
 		$command
 		if [ $? -ne 0 ]; then
-			break
+			return 1
 		fi
 		i=$(( i + 1 ))
 	done
