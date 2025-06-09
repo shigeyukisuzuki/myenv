@@ -449,3 +449,25 @@ REGEX_URL='((https?|ftp|file):\/\/)?([\da-z-]+\.)+([a-z]{2,6})([\/\w \.-]*)*\/?'
 REGEX_TIME='([01]?[0-9]|2[0-3]):[0-5][0-9]'
 REGEX_DATE='([0-9][0-9][0-9][0-9])([ /\-])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])'
 REGEX_DATETIME='([0-9][0-9][0-9][0-9])([ /\-])(0?[1-9]|1[012])\2(0?[1-9]|[12][0-9]|3[01])([ -])([0-1]?[0-9]|2[0-3]):[0-5]?[0-9]:[0-5]?[0-9]'
+
+
+# 同じコマンドを繰り返すメタコマンド
+function rep () {
+	if [ $# -lt 2 ]; then
+		cat <<EOF
+rep <repeat_times> <command...>
+EOF
+	fi
+	repeatTimes=$1
+	shift 1
+	command="$*"
+	i=0
+	while [ $i -lt $repeatTimes ]; do
+		$command
+		if [ $? -ne 0 ]; then
+			break
+		fi
+		i=$(( i + 1 ))
+	done
+}
+
