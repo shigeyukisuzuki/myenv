@@ -472,3 +472,62 @@ EOF
 	done
 }
 
+# 使用していないファイルディスクリプタの取得
+function getUnusedFd () {
+	comm --nocheck-order -1 -3 <(ls /proc/$$/fd) <(seq 254)  | head -n 1
+}
+
+# 多重起動検知コマンド
+# EXIT STATUS
+# 0 多重起動なし
+# 1 多重起動あり
+function checkMultiExec () {
+	local lines line pid2ppids pid2ppid check pid ppid cmd shell
+
+	commandString=${0##*/}
+
+	fd=$(getUnusedFd)
+	exec {fd}< <(ps axo pid,ppid,args | grep ${commandString})
+	while read -u ${fd} line; do
+		if [ -z "$lines" ]; then
+			lines="$line"
+		else
+			lines="$lines"$'\n'"$line"
+		fi
+		pid2ppid=$(echo $line | awk '{print $1 "->" $2}')
+		pid2ppids="$pid2ppids $pid2ppid"
+	done
+
+	exec {fd}< <(echo "$lines")
+	while read -u ${fd} pid ppid args; do
+		args="${args%% *}"
+		cmd="${args##*/}"
+		for shell in $(awk '/^[^#]/{print $1}' /etc/shells); do
+			if [ "$cmd" != "${shell##*/}" ]; then
+				continue
+			fi
+			check="continue_searching_my_parent"
+			while [ "$check" = "continue_searching_my_parent" ]; do
+				if [ $pid -eq $$ ]; then
+					check="found_my_parent"
+					break
+				else
+					check="found_multi_exec"
+					for pid2ppid in $pid2ppids; do
+						if [ ${pid2ppid%%->*} -eq $pid ]; then
+							check="continue_searching_my_parent"
+							pid=${pid2ppid##*->}
+							break
+						fi
+					done
+				fi
+			done
+			if [ "$check" != "found_my_parent" ]; then
+				return 1
+			fi
+		done
+	done
+
+	return 0
+}
+
