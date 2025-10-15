@@ -175,16 +175,25 @@ function fzcd() {
 		return
 	fi
 	local next
-	next=$(pwd)
-	while true; do
-		next=$(ls -a --file-type --color=always |  fzf --ansi --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% | sed -E 's#[*=>@|]$##')
+	if [ -z "$1" ]; then
+		next=$(pwd)
+	elif [ -d "$1" ]; then
+		next="$1"
+		cd "$next"
+	else
+		echo 'specified argment was not directory path'
+		return
+	fi
+	while :; do
+		next=$(ls -a --file-type --color=always |
+				fzf --ansi --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% |
+				sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
 			return
 		elif [ "$next" == './' ] || [ ! -d "$next" ]; then
 			break
 		fi
 		cd "$next"
-		next=$(pwd)
 	done
 	FZCD_SELECT=$(realpath "$next")
 	echo $FZCD_SELECT
