@@ -17,7 +17,7 @@ set relativenumber
 " 行番号の色
 highlight LineNr ctermfg=darkyellow
 " コマンドラインの画面の行数
-set cmdheight=2
+set cmdheight=1
 " 保存されていないファイルがあるときでも別のファイルを開けるようにする
 set hidden
 " シンタックスハイライト
