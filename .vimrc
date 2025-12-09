@@ -9,7 +9,7 @@ set nocompatible
 "---------------------------------------------------------------------------
 "表示
 " カラーテーマ
-colorscheme industry
+colorscheme elflord
 " 現在行数の表示
 set number
 " 相対行数の表示
