@@ -354,3 +354,46 @@ endfunction
 function! TruncateQuoationMarks()
 	s/\v^"|"$//g
 endfunction
+
+" ビジュアルモードで選択している箇所の文字コードを一覧表示
+function! DisplayVisualCharCodes()
+    " 開始位置と終了位置を取得
+    let l:start = getpos("'<")
+    let l:end   = getpos("'>")
+
+    if l:start[1] != l:end[1]
+        echo "単一行内で範囲選択してください。"
+        return
+    endif
+
+    " 選択している文字列を取得
+    let l:selectedText = getline(l:start[1])[l:start[2] - 1 : l:end[2] - 1]
+
+    " 1文字ごとに処理
+    let l:output = []
+    for l:char in split(l:selectedText, '\zs')
+        " 文字コードを取得(ASCII/Unicode code point)
+        let l:charVal = char2nr(l:char)
+        call add(l:output, printf("<%s> %3d,  16進数 %x,  8進数 %03o", l:char, l:charVal, l:charVal, l:charVal))
+    endfor
+
+    " 改行コードを取得
+    let l:format = &fileformat
+    if l:format == 'unix'
+        let l:returnCode = "\n"
+    elseif l:format == 'dos'
+        let l:returnCode = "\r\n"
+    elseif l:format == 'mac'
+        let l:returnCode = "\r"
+    else
+        echo "不明なファイルフォーマットです: " . l:format
+        let l:returnCode = "\n"
+    endif
+
+    " 要素を改行コードを介して接続し、コマンドラインに結果を表示
+    echo join(l:output,l:returnCode)
+endfunction
+
+" マッピングの例: ビジュアルモードで <Leader>c を押すと実行されます
+" (Leaderキーは通常 \)
+vmap <Leader>a :<C-u>call DisplayVisualCharCodes()<CR>
