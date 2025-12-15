@@ -397,3 +397,12 @@ endfunction
 " マッピングの例: ビジュアルモードで <Leader>c を押すと実行されます
 " (Leaderキーは通常 \)
 vmap <Leader>a :<C-u>call DisplayVisualCharCodes()<CR>
+
+" 単語を文字で囲む
+nnoremap <Leader>s" ciw""<Esc>P
+nnoremap <Leader>s' ciw''<Esc>P
+nnoremap <Leader>s` ciw``<Esc>P
+nnoremap <Leader>s( ciw()<Esc>P
+nnoremap <Leader>s{ ciw{}<Esc>P
+nnoremap <Leader>s[ ciw[]<Esc>P
+nnoremap <Leader>s< ciw<><Esc>P
