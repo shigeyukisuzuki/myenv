@@ -540,3 +540,9 @@ function checkMultiExec () {
 	return 0
 }
 
+
+# GNU Source Highlightがある場合、defaultで使用
+if which source-highlight >/dev/null; then
+	export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+	export LESS=' -X -R '
+fi
