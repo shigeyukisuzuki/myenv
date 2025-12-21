@@ -173,7 +173,7 @@ function preview() {
 	path="${1%[*/=>@|]}"
 	if [ -d "$path" ]; then
 		ls -a --file-type --color=always -1 "$path"
-	else
+	elif file "$FZCD" | grep -q 'text'; then
 		less "$path"
 	fi
 }
@@ -197,7 +197,7 @@ function fzcd() {
 		return
 	fi
 	while :; do
-		next=$(ls -a --file-type --color=always |
+		next=$( ls -a --file-type --color=always |
 				fzf --ansi --reverse --prompt "$next > " --preview 'preview {}' --preview-window=right:60% |
 				sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
@@ -207,11 +207,14 @@ function fzcd() {
 		fi
 		cd "$next"
 	done
-	FZCD_SELECT=$(realpath "$next")
-	if file "$FZCD_SELECT" | grep -q text; then
-		vim $FZCD_SELECT
+	FZCD=$(realpath "$next")
+	echo -n "$FZCD" | xsel -i -b
+	if file "$FZCD" | grep -q 'text'; then
+		vim "$FZCD"
+	elif file "$FZCD" | grep -q 'Audio file'; then
+		mplayer "$FZCD"
 	else
-		echo $FZCD_SELECT
+		echo "$FZCD"
 	fi
 }
 
