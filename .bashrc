@@ -208,7 +208,11 @@ function fzcd() {
 		cd "$next"
 	done
 	FZCD_SELECT=$(realpath "$next")
-	echo $FZCD_SELECT
+	if file "$FZCD_SELECT" | grep -q text; then
+		vim $FZCD_SELECT
+	else
+		echo $FZCD_SELECT
+	fi
 }
 
 # fuzzy history execute
