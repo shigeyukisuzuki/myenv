@@ -168,6 +168,18 @@ function list-select () {
 	done
 }
 
+# preview command for fzcd
+function preview() {
+	path="${1%[*/=>@|]}"
+	if [ -d "$path" ]; then
+		ls -a --file-type --color=always -1 "$path"
+	else
+		less "$path"
+	fi
+}
+# export for using in fzcd
+export -f preview
+
 # fuzzy file finder
 function fzcd() {
 	if ! which fzf > /dev/null; then
@@ -186,7 +198,7 @@ function fzcd() {
 	fi
 	while :; do
 		next=$(ls -a --file-type --color=always |
-				fzf --ansi --reverse --prompt "$next > " --preview 'less {}' --preview-window=right:60% |
+				fzf --ansi --reverse --prompt "$next > " --preview 'preview {}' --preview-window=right:60% |
 				sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
 			return
