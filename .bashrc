@@ -175,6 +175,8 @@ function preview() {
 		ls -a --file-type --color=always -1 "$path"
 	elif file "$FZCD" | grep -q 'text'; then
 		less "$path"
+	else
+		printf "[30;47m%s[0m\n" "$(file "$path")"
 	fi
 }
 # export for using in fzcd
