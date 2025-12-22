@@ -170,13 +170,22 @@ function list-select () {
 
 # preview command for fzcd
 function preview() {
-	path="${1%[*/=>@|]}"
-	if [ -d "$path" ]; then
-		ls -a --file-type --color=always -1 "$path"
+	filepath="${1%[*/=>@|]}"
+	if [ -d "$filepath" ]; then
+		ls -a --file-type --color=always -1 "$filepath"
 	elif file "$FZCD" | grep -q 'text'; then
+<<<<<<< HEAD
 		less "$path"
 	else
 		printf "[30;47m%s[0m\n" "$(file "$path")"
+<<<<<<< HEAD
+=======
+=======
+		less "$filepath"
+	else
+		printf "[30;47m%s[0m\n" "$(file "$filepath")"
+>>>>>>> 69b1109 (preview function display file type for others)
+>>>>>>> 8f765f4 (preview function display file type for others)
 	fi
 }
 # export for using in fzcd
