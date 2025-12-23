@@ -242,9 +242,6 @@ function fzpkill() {
 bind '"\C-xs":"select-file"'
 bind '"\C-xf":"select-file -f"'
 bind '"\C-xl":"list-select"'
-# The following binding is worse because variable expansion is often failed.
-#bind '"\C-xs":"select-file\" $SELECTED_FILE\e\C-e\""'
-bind '"\C-xw":"\"$SELECTED_FILE\""'
 # Following an assignment to bind-x to use prompting cause hang up. Don't use.
 #bind -x '"\C-xS":"select-file"'
 
@@ -273,15 +270,8 @@ bind '"\C-xv":" +%p +q!"'
 
 bind -x '"\ej":ls -ACF'
 bind -x '"\e[B":ls -ACF'
-#bind -x '"\el":ls -lF'
-bind -x '"\eo":ls -1 | nl'
-#bind -x '"\ed":ls /dev/'
-bind -x '"\ek":cd ..;echo "====> $PWD"'
-#bind -x '"\e[A":cd ..;echo "====> $PWD"'
-bind -x '"\e~":cd ~;echo "====> $PWD"'
-#bind -x '"\e/":cd /;echo "====> $PWD"'
-bind -x '"\ep":ps alx | less'
-bind -x '"\et":date "+%Y%m%d"'
+bind -x '"\ed":date "+%Y/%m/%d"'
+bind -x '"\et":date "+%H:%M:%S"'
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;45m\]@\h\[\e[37;44m\]:\w\[\e[0m\] '
 case $HOSTNAME in
