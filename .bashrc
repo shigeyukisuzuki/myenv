@@ -168,22 +168,22 @@ function list-select () {
 	done
 }
 
-# preview command for fzcd
+# preview command for fzv
 function preview() {
 	filepath="${1%[*/=>@|]}"
 	if [ -d "$filepath" ]; then
 		ls -a --file-type --color=always -1 "$filepath"
-	elif file "$FZCD" | grep -q 'text'; then
+	elif file "$FZV" | grep -q 'text'; then
 		less "$filepath"
 	else
 		printf "[30;47m%s[0m\n" "$(file "$filepath")"
 	fi
 }
-# export for using in fzcd
+# export for using in fzv
 export -f preview
 
 # fuzzy file finder
-function fzcd() {
+function fzv() {
 	if ! which fzf > /dev/null; then
 		echo 'command fzf not found'
 		return
@@ -199,8 +199,9 @@ function fzcd() {
 		return
 	fi
 	while :; do
-		next=$( ls -a --file-type --color=always |
-				fzf --ansi --reverse --prompt "$next > " --preview 'preview {}' --preview-window=right:60% |
+		next=$( ls -A --file-type --color=always |
+				fzf --ansi --reverse --prompt "$next > " --preview 'preview {}' --preview-window=right:60% \
+					--bind "ctrl-h:become(echo ..)" --bind "ctrl-s:jump-accept" --bind "ctrl-f:page-down" --bind "ctrl-b:page-up" |
 				sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
 			return
@@ -209,14 +210,14 @@ function fzcd() {
 		fi
 		cd "$next"
 	done
-	FZCD=$(realpath "$next")
-	echo -n "$FZCD" | xsel -i -b
-	if file "$FZCD" | grep -q 'text'; then
-		vim "$FZCD"
-	elif file "$FZCD" | grep -q 'Audio file'; then
-		mplayer "$FZCD"
+	FZV=$(realpath "$next")
+	echo -n "$FZV" | xsel -i -b
+	if file "$FZV" | grep -q 'text'; then
+		vim "$FZV"
+	elif file "$FZV" | grep -q 'Audio file'; then
+		mplayer "$FZV"
 	else
-		echo "$FZCD"
+		echo "$FZV"
 	fi
 }
 
