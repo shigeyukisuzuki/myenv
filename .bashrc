@@ -211,13 +211,14 @@ function fzv() {
 		cd "$next"
 	done
 	FZV=$(realpath "$next")
-	echo -n "$FZV" | xsel -i -b
+	echo "$FZV" | xsel -i -b
 	if file "$FZV" | grep -q 'text'; then
 		vim "$FZV"
-	elif file "$FZV" | grep -q 'Audio file'; then
-		mplayer "$FZV"
 	else
-		echo "$FZV"
+		xdg-open "$FZV"
+		if [ $? -ne 0 ]; then
+			echo "Could not open $(file "$FZV")"
+		fi
 	fi
 }
 
