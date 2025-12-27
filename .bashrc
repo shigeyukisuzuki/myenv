@@ -190,16 +190,22 @@ function fzv() {
 	fi
 	local next
 	if [ -z "$1" ]; then
-		next=$(pwd)
+		next="$(pwd)"
+		lsoption='-A'
 	elif [ -d "$1" ]; then
 		next="$1"
+		lsoption='-A'
 		cd "$next"
+	elif [ '-m' == "${1}" ]; then
+		# mouse mode
+		next="$(pwd)"
+		lsoption='-a'
 	else
 		echo 'specified argment was not directory path'
 		return
 	fi
 	while :; do
-		next=$( ls -A --file-type --color=always |
+		next=$( ls "${lsoption}" --file-type --color=always |
 				fzf --ansi --reverse --header="$(realpath "$next")" --header-first --prompt "  > " --preview 'preview {}' --preview-window=right:60% \
 					--bind "ctrl-h:become(echo ..)" --bind "ctrl-s:jump-accept" --bind "ctrl-f:page-down" --bind "ctrl-b:page-up" |
 				sed -E 's#[*=>@|]$##')
