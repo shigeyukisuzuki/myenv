@@ -207,7 +207,7 @@ function fzv() {
 	while :; do
 		next=$( ls "${lsoption}" --file-type --color=always |
 				fzf --ansi --reverse --header="$(realpath "$next")" --header-first --prompt "  > " --preview 'preview {}' --preview-window=right:60% \
-					--bind "ctrl-h:become(echo ..)" --bind "ctrl-s:jump-accept" --bind "ctrl-f:page-down" --bind "ctrl-b:page-up" |
+					--bind "ctrl-h:become(echo ..)" --bind "ctrl-l:accept" --bind "ctrl-s:jump-accept" --bind "ctrl-f:page-down" --bind "ctrl-b:page-up" |
 				sed -E 's#[*=>@|]$##')
 		if [ -z "$next" ]; then
 			return
