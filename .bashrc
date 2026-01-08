@@ -173,7 +173,7 @@ function preview() {
 	filepath="${1%[*/=>@|]}"
 	if [ -d "$filepath" ]; then
 		ls -a --file-type --color=always -1 "$filepath"
-	elif file "$FZV" | grep -q 'text'; then
+	elif file "$filepath" | grep -q 'text'; then
 		less "$filepath"
 	else
 		printf "[30;47m%s[0m\n" "$(file "$filepath")"
