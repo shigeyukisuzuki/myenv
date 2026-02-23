@@ -217,7 +217,7 @@ function fzv() {
 		cd "$next"
 	done
 	FZV=$(realpath "$next")
-	echo "$FZV" | xsel -i -b
+	#echo "$FZV" | xsel -i -b
 	if file "$FZV" | grep -q 'text'; then
 		vim "$FZV"
 	else
@@ -246,9 +246,12 @@ function fzpkill() {
 	ps $1 | fzf -m --reverse | tr -s ' ' | cut -d ' ' -f $columnPid | xargs kill
 }
  
-bind '"\C-xs":"select-file"'
-bind '"\C-xf":"select-file -f"'
-bind '"\C-xl":"list-select"'
+bind '"\C-xs":"select-file
+"'
+bind '"\C-xf":"select-file -f
+"'
+bind '"\C-xl":"list-select
+"'
 # Following an assignment to bind-x to use prompting cause hang up. Don't use.
 #bind -x '"\C-xS":"select-file"'
 
@@ -272,7 +275,8 @@ bind '"\C-x]":" ]\eb[ \ef"'  # spaces need for squaring bracket a condition exp
 bind '"\C-x]]":" ]]\eb[[ \ef"'  # spaces need for squaring bracket a condition expression.
 
 # call pager/editor
-bind '"\C-xp":" | less -R"'
+bind '"\C-xp":" | less -R
+"'
 bind '"\C-xv":" +%p +q!"'
 
 bind -x '"\ej":ls -ACF'
@@ -565,3 +569,6 @@ if which source-highlight >/dev/null; then
 	export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
 	export LESS=' -X -R '
 fi
+
+# Created by `pipx` on 2026-02-14 07:56:37
+export PATH="$PATH:/home/ssuzuki/.local/bin"
