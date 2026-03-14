@@ -1,15 +1,15 @@
 #!/usr/bin/bash
 if [ "$1" = "push" ]; then
 	if [ "$2" = "--no-dry" ]; then
-		rsync -av ~/task/ ssuzuki@"${taskServer}":~/task --update --delete
+		rsync -av ~/task/ "${USER}@${taskServer}":~/task --update --delete
 	else
-		rsync -av ~/task/ ssuzuki@"${taskServer}":~/task --update --delete --dry-run
+		rsync -av ~/task/ "${USER}@${taskServer}":~/task --update --delete --dry-run
 	fi
 elif [ "$1" = "pull" ]; then
 	if [ "$2" = "--no-dry" ]; then
-		rsync -av ssuzuki@"${taskServer}":~/task/ ~/task --update --delete
+		rsync -av "${USER}@${taskServer}":~/task/ ~/task --update --delete
 	else
-		rsync -av ssuzuki@"${taskServer}":~/task/ ~/task --update --delete --dry-run
+		rsync -av "${USER}@${taskServer}":~/task/ ~/task --update --delete --dry-run
 	fi
 else
 	echo "usage:"
