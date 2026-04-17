@@ -3,23 +3,23 @@
 case "$1" in
 	"push")
 		if [ "$2" = "--no-dry" ]; then
-			rsync -av ~/task/ "${USER}@${taskServer}":~/task --update --delete
+			rsync -av -e "ssh -i ${taskCredential}" ~/task/ "${USER}@${taskServer}":~/task --update --delete
 		else
-			rsync -av ~/task/ "${USER}@${taskServer}":~/task --update --delete --dry-run
+			rsync -av -e "ssh -i ${taskCredential}" ~/task/ "${USER}@${taskServer}":~/task --update --delete --dry-run
 			read -p "sync remote data? [Y/n]: " x
 			if [ "$x" == 'Y' ]; then
-				rsync -av ~/task/ "${USER}@${taskServer}":~/task --update --delete
+				rsync -av -e "ssh -i ${taskCredential}" ~/task/ "${USER}@${taskServer}":~/task --update --delete
 			fi
 		fi
 		;;
 	"pull")
 		if [ "$2" = "--no-dry" ]; then
-			rsync -av "${USER}@${taskServer}":~/task/ ~/task --update --delete
+			rsync -av -e "ssh -i ${taskCredential}" "${USER}@${taskServer}":~/task/ ~/task --update --delete
 		else
-			rsync -av "${USER}@${taskServer}":~/task/ ~/task --update --delete --dry-run
+			rsync -av -e "ssh -i ${taskCredential}" "${USER}@${taskServer}":~/task/ ~/task --update --delete --dry-run
 			read -p "sync local data? [Y/n]: " x
 			if [ "$x" == 'Y' ]; then
-				rsync -av "${USER}@${taskServer}":~/task/ ~/task --update --delete
+				rsync -av -e "ssh -i ${taskCredential}" "${USER}@${taskServer}":~/task/ ~/task --update --delete
 			fi
 		fi
 		;;
