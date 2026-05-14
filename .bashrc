@@ -22,6 +22,9 @@ HISTFILESIZE=2000
 # insert timestamp to each line in history.
 export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S "
 
+# share multiple terminal bash historys
+PROMPT_COMMAND="${PROMPT_COMMAND} history -a; history -c; history -r;"
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -569,6 +572,3 @@ if which source-highlight >/dev/null; then
 	export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
 	export LESS=' -X -R '
 fi
-
-# Created by `pipx` on 2026-02-14 07:56:37
-export PATH="$PATH:/home/ssuzuki/.local/bin"
