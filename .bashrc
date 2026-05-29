@@ -572,3 +572,60 @@ if which source-highlight >/dev/null; then
 	export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
 	export LESS=' -X -R '
 fi
+
+# 簡易統計分析
+function statistics () {
+	if ! awk --version | head -n 1 | grep -q -i 'GNU'; then
+		echo 'use GNU Awk' >/dev/stderr
+		exit 1
+	fi
+	awk 'NR==1{
+			min=$1
+			max=$1
+		} {
+			if(max<$1) max=$1
+			if(min>$1) min=$1
+			sum+=$1
+			data[NR]=$1
+			frequency[$1]++
+		}END{
+			# 最大値
+			print "max", max
+			# 最小値
+			print "min", min
+			# 総和
+			print "sum", sum
+			# 平均値
+			average=sum/NR
+			print "average", average
+			# 中央値
+			asort(data)
+			if(NR%2==0){
+				print "median", (data[NR/2] + data[(NR/2)+1])/2
+			}else{
+				print "median", data[(NR+1)/2]
+			}
+			# 最頻値 
+			asort(frequency, keys)
+			maxFrequency=keys[length(keys)]
+			first=1
+			for(i in frequency){
+				if(maxFrequency==frequency[i]){
+					if(first){
+						mode=i
+						first=0
+						continue
+					}
+					mode=mode","i
+				}
+			}
+			print "mode",mode
+			print "max frequency",maxFrequency
+			# 分散
+			for(i in data) s+=(data[i]-average)^2
+			print "variance", s/(NR-1)
+			# 標準偏差
+			print "standard deviation", sqrt(s/(NR-1))
+		}'
+}
+
