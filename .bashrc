@@ -307,9 +307,6 @@ esac
 PS1="${debian_chroot:+($debian_chroot)}\[\e[30;47m\]\u\[\e[37;${bgHost}m\]@\h\[\e[37;44m\]:\w\[\e[0m\] "
 PS2=$(echo $PS1 | sed -e "s/\${*}//g" | sed -e "s/\\e.+m//g")\>
 
-# For using Explorer.exe in debian
-export PATH=$PATH:/mnt/c/Windows/system32:/mnt/c/Windows
-
 # script for network
 ## get ip version 6 full address
 function ipv6full {
