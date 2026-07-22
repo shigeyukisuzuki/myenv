@@ -563,7 +563,6 @@ function checkMultiExec () {
 	return 0
 }
 
-
 # GNU Source Highlightがある場合、defaultで使用
 if which source-highlight >/dev/null; then
 	export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
@@ -624,5 +623,32 @@ function statistics () {
 			# 標準偏差
 			print "standard deviation", sqrt(s/(NR-1))
 		}'
+}
+
+function ipv4address2int () {
+	if ! echo $1 | grep -qP "$REGEX_IPV4"; then
+		echo 'specify ip version 4 address'
+		return 1
+	fi
+	echo $1 | tr . ' ' | (
+		read x3 x2 x1 x0
+		echo "$x3*256^3 + $x2*256^2 + $x1*256^1 + $x0*256^0" | bc
+	)
+}
+
+function int2ipv4address () {
+	if ! echo $1 | grep -qP "\d+"; then
+		echo 'specify integer number'
+		return 1
+	fi
+	temp=$1
+	x3=$(echo "$temp/256^3" | bc)
+	temp=$(echo "$temp%256^3" | bc)
+	x2=$(echo "$temp/256^2" | bc)
+	temp=$(echo "$temp%256^2" | bc)
+	x1=$(echo "$temp/256^1" | bc)
+	temp=$(echo "$temp%256^1" | bc)
+	x0=$(echo "$temp/256^0" | bc)
+	echo "$x3.$x2.$x1.$x0"
 }
 
