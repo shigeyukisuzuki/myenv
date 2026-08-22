@@ -283,7 +283,7 @@ bind '"\C-xp":" | less -R
 bind '"\C-xv":" +%p +q!"'
 
 bind -x '"\ej":ls -ACF'
-bind -x '"\e[B":ls -ACF'
+#bind -x '"\e[B":ls -ACF'
 bind -x '"\ed":date "+%Y/%m/%d"'
 bind -x '"\et":date "+%H:%M:%S"'
 
