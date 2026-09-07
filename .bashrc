@@ -351,13 +351,39 @@ function record () {
 
 # display terminal colors
 function listColors () {
-	echo "n  FG    BG"
+	echo "FG\BG  40  41  42  43  44  45  46  47 100 101 102 103 104 105 106 107"
 	for i in $(seq 0 7); do 
-		echo -e "${i} \e[3${i}m 3${i}  \e[0;4${i}m  4${i}  \e[0m"
+		echo -n "   3${i}"
+		for j in $(seq 0 7); do
+			echo -e -n "\e[3${i};4${j}m ###\e[0m"
+		done
+		for j in $(seq 0 7); do
+			echo -e -n "\e[3${i};10${j}m ###\e[0m"
+		done
+		echo
 	done
-	for i in $(seq 0 7); do
-		echo -e "${i} \e[9${i}m 9${i}  \e[0;10${i}m 10${i}  \e[0m"
+	for i in $(seq 0 7); do 
+		echo -n "   9${i}"
+		for j in $(seq 0 7); do
+			echo -e -n "\e[9${i};4${j}m ###\e[0m"
+		done
+		for j in $(seq 0 7); do
+			echo -e -n "\e[9${i};10${j}m ###\e[0m"
+		done
+		echo
 	done
+}
+
+# colorize string
+function colorize() {
+	ESC=$(printf '\033')
+	sed "s/^/${ESC}[${1}m/" | sed "s/$/${ESC}[m/"
+}
+
+# colorize command output
+function color {
+	#       error: red           normal: green
+	$@ 2> >(colorize "91;107") | colorize "92"
 }
 
 # extract log data between datetimes
