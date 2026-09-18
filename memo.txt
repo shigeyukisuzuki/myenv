@@ -2,3 +2,9 @@
 UDEV Gothic
 # 幅1.2倍にして使用
 https://github.com/yuru7/udev-gothic/releases
+
+- ssh config
+以下のようにinstall
+$ cd ~/.ssh
+$ x=~${USER}
+$ ln -s ~${x}/myenv/ssh_config -T config
