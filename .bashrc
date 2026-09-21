@@ -678,3 +678,10 @@ function int2ipv4address () {
 	echo "$x3.$x2.$x1.$x0"
 }
 
+function gcd () {
+	local d
+	d="$(git rev-parse --show-toplevel 2>/dev/null)"
+	if [ -d "$d" ]; then
+		cd "$d"
+	fi
+}
