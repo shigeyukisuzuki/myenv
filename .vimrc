@@ -22,16 +22,29 @@ set cmdheight=1
 set hidden
 " シンタックスハイライト
 syntax on
+" vimの行番号・相対行番号の表示関連
+let s:numberDisplayMode=v:true
 " vimの行番号・相対行番号を表示
 function! Number()
 	set number
 	set relativenumber
+	let s:numberDisplayMode=v:true
 endfunction
 " vimの行番号・相対行番号を非表示
 function! NoNumber()
 	set nonumber
 	set norelativenumber
+	let s:numberDisplayMode=v:false
 endfunction
+" vimの行番号・相対行番号の表示・非表示切替え
+function! ToggleNumberDisplayMode()
+	if s:numberDisplayMode
+		:call NoNumber()
+	else
+		:call Number()
+	endif
+endfunction
+nnoremap <C-n> :call ToggleNumberDisplayMode()<CR>
 " タブの表示
 set list listchars=tab:\|\ ,eol:↲
 " カーソル
