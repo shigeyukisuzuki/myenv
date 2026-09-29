@@ -36,12 +36,16 @@ function! NoNumber()
 	set norelativenumber
 	let s:numberDisplayMode=v:false
 endfunction
+" ターミナルマルチプレクサでのコピー用
 " vimの行番号・相対行番号の表示・非表示切替え
+" tab文字,EOL文字の表示・非表示切替え
 function! ToggleNumberDisplayMode()
 	if s:numberDisplayMode
 		:call NoNumber()
+		:set list listchars=tab:\ \ 
 	else
 		:call Number()
+		:set list listchars=tab:\|\ ,eol:↲
 	endif
 endfunction
 nnoremap <C-n> :call ToggleNumberDisplayMode()<CR>
