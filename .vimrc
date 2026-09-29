@@ -152,6 +152,8 @@ endif
 set nobackup
 
 "---------------------------------------------------------------------------
+set timeoutlen=1000
+set ttimeoutlen=0
 "キーバインド
 "  zxcv配列の代替キー インクリメント、デクリメントのショートカット
 nnoremap <A-a> <C-a>
@@ -189,6 +191,7 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-y> <C-o>p
 
+"---------------------------------------------------------------------------
 "キー設定関連
 "  IME設定
 set iminsert=0
@@ -196,6 +199,25 @@ set imsearch=0
 "set imcmdline
 "  normalモードの行頭時のhキーと行末時のlキーの折り返しキーバインド
 set whichwrap=<,>,~,b,s,h,l
+" IME状態管理
+if executable('fcitx-remote')
+	autocmd BufReadPost * :let w:ime_status = system('fcitx-remote')
+	" Escapeする前にIMEの状態を保存する
+	autocmd InsertLeave * silent call IMEStatusPreserve()
+	function! IMEStatusPreserve()
+	|   let w:ime_status = system('fcitx-remote')
+	|   if w:ime_status == 2
+	|   |   silent !fcitx-remote -c
+	|   endif
+	endfunction
+	" Insertする際にIMEの状態を復元する
+	autocmd InsertEnter * silent call IMEStatusRestore()
+	function! IMEStatusRestore()
+	|   if w:ime_status == 2
+	|   |   silent !fcitx-remote -o
+	|   endif
+	endfunction
+endif
 
 "  設定更新
 nnoremap     <F1> :help 
@@ -233,7 +255,8 @@ vnoremap <S-C-j> "tx"tp`[V`]
 
 "  ハイライト解除
 "nnoremap <ESC><ESC> <ESC>:noh<CR>:redir END<CR>
-nnoremap <silent> <ESC><ESC> :nohlsearch<CR><C-l>
+"nnoremap <silent> <ESC><ESC> :nohlsearch<CR><C-l>
+nnoremap <silent> <Leader><Leader> :nohlsearch<CR><C-l>
 
 " vimライクなキーバインド
 "nunmap <C-f>
