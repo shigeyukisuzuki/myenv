@@ -201,21 +201,24 @@ set imsearch=0
 set whichwrap=<,>,~,b,s,h,l
 " IME状態管理
 if executable('fcitx-remote')
-	autocmd BufReadPost * :let w:ime_status = system('fcitx-remote')
+	" IMEの初期状態を保存する
+	autocmd BufEnter * :let w:ime_state = system('fcitx-remote')
+	autocmd BufReadPost * :let w:ime_state = system('fcitx-remote')
+	"autocmd BufNewFile * :let w:ime_state = system('fcitx-remote')
 	" Escapeする前にIMEの状態を保存する
 	autocmd InsertLeave * silent call IMEStatusPreserve()
 	function! IMEStatusPreserve()
-	|   let w:ime_status = system('fcitx-remote')
-	|   if w:ime_status == 2
-	|   |   silent !fcitx-remote -c
-	|   endif
+		let w:ime_state = system('fcitx-remote')
+		if w:ime_state == 2
+			silent !fcitx-remote -c
+		endif
 	endfunction
 	" Insertする際にIMEの状態を復元する
 	autocmd InsertEnter * silent call IMEStatusRestore()
 	function! IMEStatusRestore()
-	|   if w:ime_status == 2
-	|   |   silent !fcitx-remote -o
-	|   endif
+		if w:ime_state == 2
+			silent !fcitx-remote -o
+		endif
 	endfunction
 endif
 
