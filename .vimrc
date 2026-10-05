@@ -38,6 +38,8 @@ function! NoNumber()
 endfunction
 " ターミナルマルチプレクサでのコピー用
 " vimの行番号・相対行番号の表示・非表示切替え
+" タブの表示
+set list listchars=tab:\|\ ,eol:↲
 " tab文字,EOL文字の表示・非表示切替え
 function! ToggleNumberDisplayMode()
 	if s:numberDisplayMode
@@ -49,8 +51,6 @@ function! ToggleNumberDisplayMode()
 	endif
 endfunction
 nnoremap <C-n> :call ToggleNumberDisplayMode()<CR>
-" タブの表示
-set list listchars=tab:\|\ ,eol:↲
 " カーソル
 "  カーソルラインの表示
 set cursorline
@@ -235,7 +235,9 @@ nnoremap <C-@> @@
 
 "  xやsではregisterにyankしない
 nnoremap x "_x
+vnoremap x "_x
 nnoremap s "_s
+vnoremap s "_s
 
 "  検索中の単語をハイライトする
 set hlsearch
