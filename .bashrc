@@ -230,6 +230,7 @@ function fzv() {
 		fi
 	fi
 }
+bind -x '"\C-x\C-x": fzv'
 
 # fuzzy history execute
 function fzhistory() {
@@ -688,7 +689,7 @@ function gcd () {
 
 # fzfでお気に入りコマンドを選択し、コマンドラインのカーソル位置に挿入する関数
 function fav() {
-	local selectedCommand="$(cat ~/myenv/favorites | fzf)"
+	local selectedCommand="$(cat ~/myenv/favorites | fzf --reverse)"
 	
 	# 選択されていない場合、終了
 	[ -z "$selectedCommand" ] && return
