@@ -685,3 +685,17 @@ function gcd () {
 		cd "$d"
 	fi
 }
+
+# fzfでお気に入りコマンドを選択し、コマンドラインのカーソル位置に挿入する関数
+function fav() {
+	local selectedCommand="$(cat ~/myenv/favorites | fzf)"
+	
+	# 選択されていない場合、終了
+	[ -z "$selectedCommand" ] && return
+
+	# 現在のコマンドライン文字列に結合して挿入
+	READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}${selectedCommand}${READLINE_LINE:$READLINE_POINT}"
+	READLINE_POINT=$((READLINE_POINT + ${#selectedCommand}))
+}
+bind -x '"\C-x\C-f": fav'
+
