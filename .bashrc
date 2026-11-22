@@ -700,3 +700,25 @@ function fav() {
 }
 bind -x '"\C-x\C-f": fav'
 
+function findPath() {
+	local promptString="$(echo -e "${PS1@P}" | tr -cd $'[:print:]\x1b')"
+	local inputString="${READLINE_LINE:0:READLINE_POINT}"
+	#echo "i=${inputString} $(echo -n "$inputString" | xxd )"
+	#local inputDisplayString="$(echo $inputString | sed -E 's/^(.* )[^ ]*$/\1/')"
+	local inputDisplayString="$(echo -n "$inputString" | grep -oP '^.* ')"
+	if [ -z "$inputDisplayString" ]; then
+		local inputQueryString="$(echo -n "$inputString" | grep -oP '^[^ ]*')"
+	else
+		local inputQueryString="$(echo -n "$inputString" | grep -oP '(?<= )[^ ]*$')"
+	fi
+	#echo "d=${inputDisplayString} q=${inputQueryString} $(echo -n "$inputQueryString" | xxd )"
+	local selected="$(find . -print0 | fzf +m --read0 --print0 --height 40% --layout=reverse --prompt "$(echo -e "${promptString}${inputDisplayString}")" --query="${inputQueryString}" | strings)"
+
+	# 選択されていない場合、終了
+	[ -z "$selected" ] && return
+
+	# 現在のコマンドライン文字列に結合して挿入
+	READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT - ${#inputQueryString}}${selected}"
+	READLINE_POINT=$((READLINE_POINT - ${#inputQueryString} + ${#selected}))
+}
+bind -x '"\C-x\C-p": findPath'
