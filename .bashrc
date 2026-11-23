@@ -722,3 +722,37 @@ function findPath() {
 	READLINE_POINT=$((READLINE_POINT - ${#inputQueryString} + ${#selected}))
 }
 bind -x '"\C-x\C-p": findPath'
+
+function relpath() {
+	local target="$1"
+	if [ ${#*} -eq 2 ]; then
+		local start="$2"
+	else
+		local start="$(pwd -L)"
+	fi
+
+	relativeRank=$(diff <(realpath -s "${target}" | tr / '\n' | grep -v '^$') <(realpath -s "${start}" | tr / '\n' | grep -v '^$') | \
+					grep '^>' | wc -l)
+	startRank=$(realpath -s "${start}" | tr / '\n' | grep -v '^$' | wc -l)
+	targetRank=$(realpath -s "${target}" | tr / '\n' | grep -v '^$' | wc -l)
+	commonRank=$(( startRank - relativeRank ))
+	targetDiffRank=$(( targetRank - commonRank ))
+	local resultPath=''
+	for ((i=0; i<$relativeRank; i++)); do
+		resultPath="../$resultPath"
+	done
+	resultPath="${resultPath%/}"
+	while read d; do
+		resultPath="$resultPath/${d}"
+	done < <(realpath -s "${target}" | tr / '\n' | grep -v '^$' | tail -${targetDiffRank})
+	echo "$resultPath"
+	return 0
+}
+
+function sw() {
+	workPath="$(realpath ~/task/#work)"
+	relativePath="$(relpath . "$workPath")"
+	pushd "${workPath}" || return 1
+	ln -s "$relativePath" -t .
+	popd || return 1
+}
